@@ -1,0 +1,25 @@
+const express = require('express');
+const app = express();
+
+// Middleware to parse JSON request body
+app.use(express.json());
+
+// POST /register route handler
+app.post('/register', (req, res) => {
+    // Destructure the request body to extract name, email, and password
+    const { name, email, password } = req.body;
+
+    // Simple validation (optional)
+    if (!name || !email || !password) {
+        return res.status(400).json({ message: 'All fields (name, email, password) are required' });
+    }
+
+    // Simulate a successful registration process (e.g., saving to database)
+    res.status(200).json({ message: 'Registration successful', user: { name, email } });
+});
+
+// Start the server
+const port = 3000;
+app.listen(port, () => {
+    console.log(`Server running on http://localhost:${port}`);
+});
