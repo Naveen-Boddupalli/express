@@ -1,0 +1,29 @@
+const mongoose = require('mongoose');
+const Product = require('./path-to-product-model'); // Import the Product model
+
+// Example of creating a new product
+async function createProduct() {
+    const newProduct = new Product({
+        title: "Laptop",
+        price: 999.99,
+        category: "Electronics",
+        inStock: true
+    });
+
+    try {
+        const savedProduct = await newProduct.save();
+        console.log("Product saved:", savedProduct);
+    } catch (error) {
+        console.error("Error saving product:", error);
+    }
+}
+
+// Connect to MongoDB and create a product
+mongoose.connect('mongodb://localhost:27017/productsdb', { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => {
+        console.log("Connected to MongoDB");
+        createProduct();
+    })
+    .catch((error) => {
+        console.error("Error connecting to MongoDB:", error);
+    });
